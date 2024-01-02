@@ -3,7 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class DatabaseHelper {
-  static const _databaseName = "my_database.db";
+  static const _databaseName = "sample.dbb";
   static const _databaseVersion = 1;
 
   DatabaseHelper._privateConstructor();
@@ -19,8 +19,7 @@ class DatabaseHelper {
   Future<Database> _initDatabase() async {
     final dbDirectory = await getApplicationSupportDirectory();
     final dbFilePath = dbDirectory.path;
-    final path = join(dbFilePath, 'sample.db');
-    print(path);
+    final path = join(dbFilePath, _databaseName);
     return await openDatabase(path,
         version: _databaseVersion, onCreate: _onCreate);
   }
