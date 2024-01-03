@@ -4,7 +4,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class DatabaseHelper {
   static const _databaseName = "sample.dbb";
-  static const _databaseVersion = 2;
+  static const _databaseVersion = 3;
 
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -21,7 +21,7 @@ class DatabaseHelper {
     final dbFilePath = dbDirectory.path;
     final path = join(dbFilePath, _databaseName);
     return await openDatabase(path,
-        version: _databaseVersion, onCreate: _onCreate);
+        version: _databaseVersion, onCreate: _onCreate, onUpgrade: _onUPgrade);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -35,6 +35,21 @@ class DatabaseHelper {
         taskType INTEGER NOT NULL,
         atComplete TEXT
       )
+    ''');
+  }
+
+  Future _onUPgrade(Database db, int oldVersion, int newVersion) async {
+    await db.execute('''
+      CREATE TABLE rewords(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        description TEXT,
+        point INTEGER NOT NULL
+      );
+      CREATE TABLE points(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        point INTEGER NOT NULL
+      );
     ''');
   }
 }
