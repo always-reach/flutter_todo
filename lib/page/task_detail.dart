@@ -21,6 +21,15 @@ class TaskDetailPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text("My Mission"),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () async {
+                await TaskRepositry().deleteTaskById(id);
+                Navigator.pop(context);
+              },
+            ),
+          ],
         ),
         body: FutureBuilder<Task>(
             future: TaskRepositry().getTaskById(id),
