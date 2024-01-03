@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:todo/constant/error_message.dart';
+import 'package:todo/entity/task.dart';
+import 'package:todo/repository/task_imp.dart';
 
 class TaskCreateForm extends StatefulWidget {
   const TaskCreateForm({required Key key}) : super(key: key);
@@ -64,27 +66,36 @@ class _TaskCreateFormState extends State<TaskCreateForm> {
               child: FormBuilderDropdown(
                 name: "taskType",
                 decoration: const InputDecoration(labelText: "タスクタイプ"),
-                initialValue: "1",
+                initialValue: 1,
                 items: const [
                   DropdownMenuItem(
-                    value: "1",
+                    value: 1,
                     child: Text("デイリー"),
                   ),
                   DropdownMenuItem(
-                    value: "2",
+                    value: 2,
                     child: Text("ウィークリー"),
                   ),
                   DropdownMenuItem(
-                    value: "3",
+                    value: 3,
                     child: Text("マンスリー"),
                   ),
                 ],
               ),
             ),
             MaterialButton(
-              onPressed: () {
-                if (_formKey.currentState?.saveAndValidate() ?? false) {
-                  debugPrint(_formKey.currentState?.value.toString());
+              onPressed: () async {
+                var currentState = _formKey.currentState;
+                if (currentState != null && currentState.saveAndValidate()) {
+                  var formValue = Map<String, dynamic>.from(currentState.value);
+                  formValue["isComplete"] = 0;
+                  formValue["atComplete"] = null;
+                  formValue["point"] = formValue["point"] != null
+                      ? int.tryParse(formValue["point"]) ?? 0
+                      : 0;
+                  var task = Task.fromMap(formValue);
+                  await TaskRepositry().insertTask(task);
+                  Navigator.pop(context);
                 } else {
                   debugPrint(_formKey.currentState?.value.toString());
                   debugPrint('validation failed');
