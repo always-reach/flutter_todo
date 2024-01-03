@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:todo/entity/task.dart';
 import 'package:todo/form/task_form.dart';
+import 'package:todo/repository/point_imp.dart';
 import 'package:todo/repository/task_imp.dart';
 
 class TaskDetailPage extends StatelessWidget {
@@ -22,6 +23,18 @@ class TaskDetailPage extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text("My Mission"),
           actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.check),
+              onPressed: () async {
+                var task = await TaskRepositry().getTaskById(id);
+                task.isComplete = true;
+                await TaskRepositry().updateTask(task);
+                var point = await PointRepository().getPointById(1);
+                point.point = point.point + task.point;
+                await PointRepository().updatePoint(point);
+                Navigator.pop(context);
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {

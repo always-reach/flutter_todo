@@ -4,7 +4,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class DatabaseHelper {
   static const _databaseName = "sample.dbb";
-  static const _databaseVersion = 3;
+  static const _databaseVersion = 4;
 
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -34,12 +34,7 @@ class DatabaseHelper {
         point INTEGER NOT NULL,
         taskType INTEGER NOT NULL,
         atComplete TEXT
-      )
-    ''');
-  }
-
-  Future _onUPgrade(Database db, int oldVersion, int newVersion) async {
-    await db.execute('''
+      );
       CREATE TABLE rewords(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
@@ -51,5 +46,8 @@ class DatabaseHelper {
         point INTEGER NOT NULL
       );
     ''');
+    await db.insert("points", {"point": 0});
   }
+
+  Future _onUPgrade(Database db, int oldVersion, int newVersion) async {}
 }
