@@ -4,7 +4,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class DatabaseHelper {
   static const _databaseName = "sample.dbb";
-  static const _databaseVersion = 4;
+  static const _databaseVersion = 1;
 
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();

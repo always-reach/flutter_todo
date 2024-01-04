@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/page/rewords.dart';
+import 'package:todo/page/rewards.dart';
 import 'package:todo/page/tasks.dart';
 
 class BottomNavigator extends StatefulWidget {
