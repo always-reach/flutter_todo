@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:todo/helper/db_helper.dart';
 import 'package:todo/navigator/bottom_navigator.dart';
-import 'package:todo/page/tasks.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/page/rewords.dart';
 import 'package:todo/page/tasks.dart';
 
 class BottomNavigator extends StatefulWidget {
@@ -12,7 +13,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     TaskList(),
-    TaskList(),
+    RewordList(),
   ];
 
   void _onItemTapped(int index) {

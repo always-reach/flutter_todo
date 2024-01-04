@@ -35,7 +35,7 @@ class DatabaseHelper {
         taskType INTEGER NOT NULL,
         atComplete TEXT
       );
-      CREATE TABLE rewords(
+      CREATE TABLE rewards(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT,
