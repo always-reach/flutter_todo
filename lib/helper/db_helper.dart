@@ -20,6 +20,7 @@ class DatabaseHelper {
     final dbDirectory = await getApplicationSupportDirectory();
     final dbFilePath = dbDirectory.path;
     final path = join(dbFilePath, _databaseName);
+
     return await openDatabase(path,
         version: _databaseVersion, onCreate: _onCreate, onUpgrade: _onUPgrade);
   }

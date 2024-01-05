@@ -11,8 +11,6 @@ class RewardForm extends StatelessWidget {
       : super(key: key);
 
   void handleSubmit(Map<String, dynamic> formValue) async {
-    formValue["isComplete"] = 0;
-    formValue["atComplete"] = null;
     var reward = Reward.fromMap(formValue);
     await onSubmit(reward);
   }
