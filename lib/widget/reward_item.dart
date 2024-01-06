@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/entity/reward.dart';
-import 'package:todo/page/task_detail.dart';
+import 'package:todo/page/reward_detail.dart';
 
 Widget rewardItem(Reward reward, BuildContext context) {
   return ListTile(
@@ -10,7 +10,7 @@ Widget rewardItem(Reward reward, BuildContext context) {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                TaskDetailPage(key: UniqueKey(), id: reward.id!)),
+                RewardDetailPage(key: UniqueKey(), id: reward.id!)),
       );
     },
   );

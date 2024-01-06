@@ -1,8 +1,8 @@
 class Reward {
-  final int? id;
-  final String title;
-  final String? description;
-  final int point;
+  int? id;
+  String title;
+  String? description;
+  int point;
 
   Reward({
     this.id,
