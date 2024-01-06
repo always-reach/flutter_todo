@@ -12,7 +12,7 @@ class TaskDetailPage extends StatelessWidget {
 
   Future<void> handleSubmit(Task task, BuildContext context) async {
     task.id = id;
-    await TaskRepositry().updateTask(task);
+    await TaskRepository().updateTask(task);
     Navigator.pop(context);
   }
 
@@ -26,9 +26,9 @@ class TaskDetailPage extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.check),
               onPressed: () async {
-                var task = await TaskRepositry().getTaskById(id);
+                var task = await TaskRepository().getTaskById(id);
                 task.isComplete = true;
-                await TaskRepositry().updateTask(task);
+                await TaskRepository().updateTask(task);
                 var point = await PointRepository().getPointById(1);
                 point.point = point.point + task.point;
                 await PointRepository().updatePoint(point);
@@ -38,14 +38,14 @@ class TaskDetailPage extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {
-                await TaskRepositry().deleteTaskById(id);
+                await TaskRepository().deleteTaskById(id);
                 Navigator.pop(context);
               },
             ),
           ],
         ),
         body: FutureBuilder<Task>(
-            future: TaskRepositry().getTaskById(id),
+            future: TaskRepository().getTaskById(id),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
