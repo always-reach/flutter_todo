@@ -7,7 +7,12 @@ final rewardRepositoryProvider = Provider<RewardRepository>((ref) {
   return RewardRepository();
 });
 
-final rewardProvider = FutureProvider<List<Reward>>((ref) {
+final rewardProvider = FutureProvider.family<Reward, int>((ref, id) {
+  final rewardRepository = ref.watch(rewardRepositoryProvider);
+  return rewardRepository.getRewardById(id);
+});
+
+final rewardsProvider = FutureProvider<List<Reward>>((ref) {
   final rewardRepository = ref.watch(rewardRepositoryProvider);
   return rewardRepository.getAllRewards();
 });

@@ -10,16 +10,16 @@ class RewardController {
 
   Future<void> addReward(Reward reward) async {
     await rewardRepository.insertReward(reward);
-    ref.invalidate(rewardProvider);
+    ref.invalidate(rewardsProvider);
   }
 
   Future<void> updateReward(Reward reward) async {
     await rewardRepository.updateReward(reward);
-    ref.invalidate(rewardProvider);
+    ref.invalidate(rewardsProvider);
   }
 
   Future<void> deleteReward(int id) async {
     await rewardRepository.deleteRewardById(id);
-    ref.invalidate(rewardProvider);
+    ref.invalidate(rewardsProvider);
   }
 }

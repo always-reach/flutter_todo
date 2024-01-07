@@ -14,7 +14,7 @@ class RewordList extends ConsumerWidget {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text("My Mission"),
         ),
-        body: ref.watch(rewardProvider).when(
+        body: ref.watch(rewardsProvider).when(
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, stackTrace) => const Center(
                   child: Text("エラーが発生しました"),
