@@ -3,9 +3,9 @@ import 'package:todo/entity/task.dart';
 import 'package:todo/helper/db_helper.dart';
 import 'package:todo/repository/task_abs.dart';
 
-class TaskRepositry implements TaskRepositoryAbs {
+class TaskRepository implements TaskRepositoryAbs {
   final taskDao = TaskDao(DatabaseHelper.instance);
-  TaskRepositry();
+  TaskRepository();
   @override
   Future<List<Task>> getAllTasks() {
     return taskDao.getAllTasks();

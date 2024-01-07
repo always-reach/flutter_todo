@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/entity/reward.dart';
 import 'package:todo/form/reward_form.dart';
-import 'package:todo/repository/point_imp.dart';
-import 'package:todo/repository/reward_imp.dart';
+import 'package:todo/provider/reward_provider.dart';
 
-class RewardDetailPage extends StatelessWidget {
+class RewardDetailPage extends ConsumerWidget {
   final int id;
   RewardDetailPage({Key? key, required this.id}) : super(key: key);
 
   final _formKey = GlobalKey<FormBuilderState>();
 
-  Future<void> handleSubmit(Reward reward, BuildContext context) async {
+  Future<void> handleSubmit(
+      Reward reward, WidgetRef ref, BuildContext context) async {
     reward.id = id;
-    await RewardRepository().updateReward(reward);
+    ref.read(rewardContollerProvider).updateReward(reward);
     Navigator.pop(context);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final reward = ref.watch(rewardProvider(id));
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -26,41 +28,29 @@ class RewardDetailPage extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.check),
-              onPressed: () async {
-                var reward = await RewardRepository().getRewardById(id);
-                var point = await PointRepository().getPointById(1);
-                if (point.point >= reward.point) {
-                  point.point = point.point - reward.point;
-                  await PointRepository().updatePoint(point);
-                  Navigator.pop(context);
-                }
+              onPressed: () {
+                ref.read(rewardContollerProvider).receiveReward(id);
+                Navigator.pop(context);
               },
             ),
             IconButton(
               icon: const Icon(Icons.delete),
-              onPressed: () async {
-                await RewardRepository().deleteRewardById(id);
+              onPressed: () {
+                ref.read(rewardContollerProvider).deleteReward(id);
                 Navigator.pop(context);
               },
             ),
           ],
         ),
-        body: FutureBuilder<Reward>(
-            future: RewardRepository().getRewardById(id),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (snapshot.hasError) {
-                return const Center(child: Text("エラーが発生しました"));
-              }
-              if (!snapshot.hasData) {
-                return const Center(child: Text("データがありません"));
-              }
-              var reward = snapshot.data!;
+        body: reward.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stackTrace) => const Center(
+                  child: Text("エラーが発生しました"),
+                ),
+            data: (reward) {
               return RewardForm(
                   key: _formKey,
-                  onSubmit: (reward) => handleSubmit(reward, context),
+                  onSubmit: (reward) => handleSubmit(reward, ref, context),
                   initialValue: reward.toMap());
             }));
   }

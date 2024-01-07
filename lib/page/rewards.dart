@@ -1,31 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/page/reward_create.dart';
-import 'package:todo/repository/reward_imp.dart';
+import 'package:todo/provider/reward_provider.dart';
 import 'package:todo/widget/reward_item.dart';
 
-class RewordList extends StatelessWidget {
+class RewordList extends ConsumerWidget {
   const RewordList({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text("My Mission"),
         ),
-        body: FutureBuilder(
-            future: RewardRepository().getAllRewards(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (snapshot.hasError) {
-                return const Center(child: Text("エラーが発生しました"));
-              }
-              if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(child: Text("データがありません"));
-              }
-              var rewards = snapshot.data!;
+        body: ref.watch(rewardsProvider).when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stackTrace) => const Center(
+                  child: Text("エラーが発生しました"),
+                ),
+            data: (rewards) {
               return ListView.builder(
                 itemCount: rewards.length,
                 itemBuilder: (context, index) {
