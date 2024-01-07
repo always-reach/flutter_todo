@@ -14,7 +14,7 @@ class TaskList extends ConsumerWidget {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text("My Mission"),
         ),
-        body: ref.watch(taskProvider).when(
+        body: ref.watch(tasksProvider).when(
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, stackTrace) => const Center(
                   child: Text("エラーが発生しました"),

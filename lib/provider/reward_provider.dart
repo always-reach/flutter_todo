@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/controller/reward_controller.dart';
 import 'package:todo/entity/reward.dart';
+import 'package:todo/provider/point_provider.dart';
 import 'package:todo/repository/reward_imp.dart';
 
 final rewardRepositoryProvider = Provider<RewardRepository>((ref) {
@@ -19,5 +20,9 @@ final rewardsProvider = FutureProvider<List<Reward>>((ref) {
 
 final rewardContollerProvider = Provider<RewardController>((ref) {
   final rewardRepository = ref.watch(rewardRepositoryProvider);
-  return RewardController(ref: ref, rewardRepository: rewardRepository);
+  final pointRepository = ref.watch(pointRepositoryProvider);
+  return RewardController(
+      ref: ref,
+      rewardRepository: rewardRepository,
+      pointRepository: pointRepository);
 });

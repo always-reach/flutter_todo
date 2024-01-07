@@ -3,7 +3,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/entity/reward.dart';
 import 'package:todo/form/reward_form.dart';
-import 'package:todo/provider/point_provider.dart';
 import 'package:todo/provider/reward_provider.dart';
 
 class RewardDetailPage extends ConsumerWidget {
@@ -30,9 +29,7 @@ class RewardDetailPage extends ConsumerWidget {
             IconButton(
               icon: const Icon(Icons.check),
               onPressed: () {
-                ref
-                    .read(pointControllerProvider)
-                    .usePoint(reward.value?.point ?? 0);
+                ref.read(rewardContollerProvider).receiveReward(id);
                 Navigator.pop(context);
               },
             ),
