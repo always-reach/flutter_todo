@@ -20,6 +20,26 @@ class TaskList extends ConsumerWidget {
                   child: Text("エラーが発生しました"),
                 ),
             data: (tasks) {
+              if (tasks.isEmpty) {
+                return const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.task_alt, size: 60), // アイコンの表示
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "タスクがありません。\n新しいタスクを追加しましょう。",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
               return ListView.builder(
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
