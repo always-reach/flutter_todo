@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo/constant/enum.dart';
 import 'package:todo/page/task_create.dart';
-import 'package:todo/provider/task_provider.dart';
-import 'package:todo/widget/task_item.dart';
+import 'package:todo/widget/task_section.dart';
 
 class TaskList extends ConsumerWidget {
   const TaskList({super.key});
@@ -14,39 +14,13 @@ class TaskList extends ConsumerWidget {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text("My Mission"),
         ),
-        body: ref.watch(tasksProvider).when(
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, stackTrace) => const Center(
-                  child: Text("エラーが発生しました"),
-                ),
-            data: (tasks) {
-              if (tasks.isEmpty) {
-                return const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.task_alt, size: 60), // アイコンの表示
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          "タスクがありません。\n新しいタスクを追加しましょう。",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }
-              return ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  return taskItem(tasks[index], context);
-                },
-              );
-            }),
+        body: const SingleChildScrollView(
+          child: Column(children: <Widget>[
+            TaskSection(title: "Dailyミッション", taskType: TaskType.daily),
+            TaskSection(title: "Weeklyミッション", taskType: TaskType.weekly),
+            TaskSection(title: "Monthlyミッション", taskType: TaskType.monthly),
+          ]),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(
