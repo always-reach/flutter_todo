@@ -1,3 +1,4 @@
+import 'package:todo/constant/enum.dart';
 import 'package:todo/entity/task.dart';
 import 'package:todo/helper/db_helper.dart';
 
@@ -9,6 +10,13 @@ class TaskDao {
   Future<List<Task>> getAllTasks() async {
     final db = await _databaseHelper.database;
     final maps = await db.query("tasks");
+    return maps.map((map) => Task.fromMap(map)).toList();
+  }
+
+  Future<List<Task>> getTasksFilteredByTaskType(TaskType taskType) async {
+    final db = await _databaseHelper.database;
+    final maps = await db
+        .query("tasks", where: "taskType = ?", whereArgs: [taskType.toInt()]);
     return maps.map((map) => Task.fromMap(map)).toList();
   }
 

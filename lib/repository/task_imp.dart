@@ -1,3 +1,4 @@
+import 'package:todo/constant/enum.dart';
 import 'package:todo/dao/task_dao.dart';
 import 'package:todo/entity/task.dart';
 import 'package:todo/helper/db_helper.dart';
@@ -9,6 +10,11 @@ class TaskRepository implements TaskRepositoryAbs {
   @override
   Future<List<Task>> getAllTasks() {
     return taskDao.getAllTasks();
+  }
+
+  @override
+  Future<List<Task>> getTasksFilteredByTaskType(TaskType taskType) {
+    return taskDao.getTasksFilteredByTaskType(taskType);
   }
 
   @override

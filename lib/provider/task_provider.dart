@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo/constant/enum.dart';
 import 'package:todo/controller/task_controller.dart';
 import 'package:todo/entity/task.dart';
 import 'package:todo/provider/point_provider.dart';
@@ -11,6 +12,12 @@ final taskRepositoryProvider = Provider<TaskRepository>((ref) {
 final taskProvider = FutureProvider.family<Task, int>((ref, id) {
   final taskRepository = ref.watch(taskRepositoryProvider);
   return taskRepository.getTaskById(id);
+});
+
+final tasksFilteredByTaskTypeProvider =
+    FutureProvider.family<List<Task>, TaskType>((ref, taskType) {
+  final taskRepository = ref.watch(taskRepositoryProvider);
+  return taskRepository.getTasksFilteredByTaskType(taskType);
 });
 
 final tasksProvider = FutureProvider<List<Task>>((ref) {

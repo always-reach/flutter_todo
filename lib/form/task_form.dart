@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:todo/constant/enum.dart';
 import 'package:todo/constant/error_message.dart';
 import 'package:todo/entity/task.dart';
 
@@ -11,14 +12,12 @@ class TaskForm extends StatelessWidget {
       : super(key: key);
 
   void handleSubmit(Map<String, dynamic> formValue) async {
-    formValue["isComplete"] = 0;
-    formValue["atComplete"] = null;
     var task = Task.fromMap(formValue);
     await onSubmit(task);
   }
 
   Map<String, dynamic> formValue() {
-    if (initialValue == null) return {};
+    if (initialValue == null) return {"taskType": TaskType.daily.toInt()};
     initialValue!["point"] = initialValue!["point"].toString();
 
     return initialValue!;
@@ -76,19 +75,18 @@ class TaskForm extends StatelessWidget {
             child: FormBuilderDropdown(
               name: "taskType",
               decoration: const InputDecoration(labelText: "タスクタイプ"),
-              initialValue: 1,
-              items: const [
+              items: [
                 DropdownMenuItem(
-                  value: 1,
-                  child: Text("デイリー"),
+                  value: TaskType.daily.toInt(),
+                  child: const Text("デイリー"),
                 ),
                 DropdownMenuItem(
-                  value: 2,
-                  child: Text("ウィークリー"),
+                  value: TaskType.weekly.toInt(),
+                  child: const Text("ウィークリー"),
                 ),
                 DropdownMenuItem(
-                  value: 3,
-                  child: Text("マンスリー"),
+                  value: TaskType.monthly.toInt(),
+                  child: const Text("マンスリー"),
                 ),
               ],
             ),
