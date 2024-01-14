@@ -1,10 +1,12 @@
+import 'package:todo/constant/enum.dart';
+
 class Task {
   int? id;
   String title;
   String? description;
   bool isComplete;
   int point;
-  int taskType;
+  TaskType taskType;
   DateTime? atComplete;
 
   Task({
@@ -24,7 +26,7 @@ class Task {
       'description': description,
       'isComplete': isComplete ? 1 : 0,
       'point': point,
-      'taskType': taskType,
+      'taskType': taskType.index,
       'atComplete': atComplete?.toIso8601String(),
     };
   }
@@ -36,7 +38,7 @@ class Task {
       description: map['description'] as String?,
       isComplete: map['isComplete'] == 1,
       point: map['point'] as int,
-      taskType: map['taskType'] as int,
+      taskType: TaskType.values[map['taskType'] as int],
       atComplete: map['atComplete'] == null
           ? null
           : DateTime.parse(map['atComplete'] as String),
