@@ -18,6 +18,11 @@ class TaskRepository implements TaskRepositoryAbs {
   }
 
   @override
+  Future<List<Task>> getTasksUncompletedFilterdByTaskType(TaskType taskType) {
+    return taskDao.getTasksUncompletedFilterdByTaskType(taskType);
+  }
+
+  @override
   Future<Task> getTaskById(int id) {
     return taskDao.getTaskById(id);
   }

@@ -20,6 +20,15 @@ class TaskDao {
     return maps.map((map) => Task.fromMap(map)).toList();
   }
 
+  Future<List<Task>> getTasksUncompletedFilterdByTaskType(
+      TaskType taskType) async {
+    final db = await _databaseHelper.database;
+    final maps = await db.query("tasks",
+        where: "taskType = ? AND isCompleted = ?",
+        whereArgs: [taskType.toInt(), 0]);
+    return maps.map((map) => Task.fromMap(map)).toList();
+  }
+
   Future<Task> getTaskById(int id) async {
     final db = await _databaseHelper.database;
     final maps = await db.query("tasks", where: "id = ?", whereArgs: [id]);
