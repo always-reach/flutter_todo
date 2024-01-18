@@ -33,6 +33,15 @@ class TaskController {
     ref.invalidate(pointProvider);
   }
 
+  resetTasksAccomplished() async {
+    List<Task> tasks = await taskRepository.getTasksCompletedYesterday();
+    for (var task in tasks) {
+      task.isComplete = false;
+      taskRepository.updateTask(task);
+    }
+    ref.invalidate(tasksProvider);
+  }
+
   updateTask(Task task) async {
     taskRepository.updateTask(task);
     ref.invalidate(tasksProvider);
