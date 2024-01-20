@@ -5,14 +5,14 @@ import 'package:todo/constant/error_message.dart';
 import 'package:todo/entity/reward.dart';
 
 class RewardForm extends StatelessWidget {
-  final Future<void> Function(Reward reward) onSubmit;
+  final void Function(Reward reward) onSubmit;
   final Map<String, dynamic>? initialValue;
   const RewardForm({Key? key, required this.onSubmit, this.initialValue})
       : super(key: key);
 
-  void handleSubmit(Map<String, dynamic> formValue) async {
+  void handleSubmit(Map<String, dynamic> formValue) {
     var reward = Reward.fromMap(formValue);
-    await onSubmit(reward);
+    onSubmit(reward);
   }
 
   Map<String, dynamic> formValue() {
