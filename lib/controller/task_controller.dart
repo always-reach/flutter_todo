@@ -21,6 +21,7 @@ class TaskController {
     task.isComplete = false;
     taskRepository.insertTask(task);
     ref.invalidate(tasksProvider);
+    ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
 
   accomplishedTask(int id) async {
@@ -32,6 +33,7 @@ class TaskController {
     await pointRepository.updatePoint(point);
     ref.invalidate(tasksProvider);
     ref.invalidate(pointProvider);
+    ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
 
   resetDailyTasksCompleteStatus() async {
@@ -44,6 +46,8 @@ class TaskController {
       task.isComplete = false;
       taskRepository.updateTask(task);
     }
+    ref.invalidate(tasksProvider);
+    ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
 
   resetWeeklyTasksCompleteStatus() async {
@@ -61,6 +65,8 @@ class TaskController {
       task.isComplete = false;
       taskRepository.updateTask(task);
     }
+    ref.invalidate(tasksProvider);
+    ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
 
   resetMonthylyTasksCompleteStatus() async {
@@ -74,15 +80,18 @@ class TaskController {
       taskRepository.updateTask(task);
     }
     ref.invalidate(tasksProvider);
+    ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
 
   updateTask(Task task) async {
     taskRepository.updateTask(task);
     ref.invalidate(tasksProvider);
+    ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
 
   deleteTaskById(int id) async {
     taskRepository.deleteTaskById(id);
     ref.invalidate(tasksProvider);
+    ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
 }

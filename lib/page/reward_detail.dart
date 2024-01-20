@@ -11,8 +11,7 @@ class RewardDetailPage extends ConsumerWidget {
 
   final _formKey = GlobalKey<FormBuilderState>();
 
-  Future<void> handleSubmit(
-      Reward reward, WidgetRef ref, BuildContext context) async {
+  void handleSubmit(Reward reward, WidgetRef ref, BuildContext context) {
     reward.id = id;
     ref.read(rewardContollerProvider).updateReward(reward);
     Navigator.pop(context);

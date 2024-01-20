@@ -32,6 +32,21 @@ class CountUpTextState extends State<CountUpText>
   }
 
   @override
+  void didUpdateWidget(CountUpText oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.displayNumber != oldWidget.displayNumber) {
+      _controller.reset();
+      _animation =
+          IntTween(begin: oldWidget.displayNumber, end: widget.displayNumber)
+              .animate(_controller)
+            ..addListener(() {
+              setState(() {});
+            });
+      _controller.forward();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Text(
       _animation.value.toString(),
