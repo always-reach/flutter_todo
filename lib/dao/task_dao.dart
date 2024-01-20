@@ -20,18 +20,12 @@ class TaskDao {
     return maps.map((map) => Task.fromMap(map)).toList();
   }
 
-  Future<List<Task>> getTasksCompletedYesterday() async {
+  Future<List<Task>> getTasksCompletedByAtCompleteDateAndTaskType(
+      DateTime completeDate, TaskType taskType) async {
     final db = await _databaseHelper.database;
     final maps = await db.query("tasks",
-        where: "taskType = ? AND isCompleted = ? AND atComplete = ?",
-        whereArgs: [
-          TaskType.daily.toInt(),
-          1,
-          DateTime.now()
-              .subtract(const Duration(days: 1))
-              .toString()
-              .substring(0, 10)
-        ]);
+        where: "taskType = ? AND atComplete = ?",
+        whereArgs: [taskType.toInt(), completeDate.toIso8601String()]);
     return maps.map((map) => Task.fromMap(map)).toList();
   }
 
