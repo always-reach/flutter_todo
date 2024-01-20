@@ -1,32 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/page/rewards.dart';
 import 'package:todo/page/tasks.dart';
+import 'package:todo/provider/navigation_provider.dart';
 
-class BottomNavigator extends StatefulWidget {
+class BottomNavigator extends ConsumerWidget {
   const BottomNavigator({Key? key}) : super(key: key);
-
-  @override
-  State<BottomNavigator> createState() => _BottomNavigatorState();
-}
-
-class _BottomNavigatorState extends State<BottomNavigator> {
-  int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     TaskList(),
     RewordList(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(navigationProvider);
+    final navigationNotifier = ref.read(navigationProvider.notifier);
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptions.elementAt(data.selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -39,8 +30,10 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             label: "Reword",
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        currentIndex: data.selectedIndex,
+        onTap: (index) {
+          navigationNotifier.changeIndex(index);
+        },
       ),
     );
   }

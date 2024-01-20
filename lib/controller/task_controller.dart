@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo/constant/enum.dart';
 import 'package:todo/entity/point.dart';
 import 'package:todo/entity/task.dart';
 import 'package:todo/provider/point_provider.dart';
@@ -31,6 +32,48 @@ class TaskController {
     await pointRepository.updatePoint(point);
     ref.invalidate(tasksProvider);
     ref.invalidate(pointProvider);
+  }
+
+  resetDailyTasksCompleteStatus() async {
+    DateTime now = DateTime.now();
+    DateTime todayAtFiveAM = DateTime(now.year, now.month, now.day, 5, 0, 0);
+    List<Task> dailyTasks =
+        await taskRepository.getTasksCompletedByAtCompleteDateAndTaskType(
+            todayAtFiveAM, TaskType.daily);
+    for (var task in dailyTasks) {
+      task.isComplete = false;
+      taskRepository.updateTask(task);
+    }
+  }
+
+  resetWeeklyTasksCompleteStatus() async {
+    DateTime now = DateTime.now();
+    DateTime todayAtFiveAM = DateTime(now.year, now.month, now.day, 5, 0, 0);
+    int weekday = now.weekday;
+    DateTime lastSunday = todayAtFiveAM.subtract(Duration(days: weekday));
+    if (weekday == 7) {
+      lastSunday = lastSunday.subtract(const Duration(days: 7));
+    }
+    List<Task> weeklyTasks =
+        await taskRepository.getTasksCompletedByAtCompleteDateAndTaskType(
+            lastSunday, TaskType.weekly);
+    for (var task in weeklyTasks) {
+      task.isComplete = false;
+      taskRepository.updateTask(task);
+    }
+  }
+
+  resetMonthylyTasksCompleteStatus() async {
+    DateTime now = DateTime.now();
+    DateTime firstDayOfMonth = DateTime(now.year, now.month, 1, 5, 0, 0);
+    List<Task> monthlyTasks =
+        await taskRepository.getTasksCompletedByAtCompleteDateAndTaskType(
+            firstDayOfMonth, TaskType.monthly);
+    for (var task in monthlyTasks) {
+      task.isComplete = false;
+      taskRepository.updateTask(task);
+    }
+    ref.invalidate(tasksProvider);
   }
 
   updateTask(Task task) async {
