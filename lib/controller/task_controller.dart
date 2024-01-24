@@ -44,6 +44,7 @@ class TaskController {
             todayAtFiveAM, TaskType.daily);
     for (var task in dailyTasks) {
       task.isComplete = false;
+      task.atComplete = null;
       taskRepository.updateTask(task);
     }
     ref.invalidate(tasksProvider);
@@ -63,6 +64,7 @@ class TaskController {
             lastSunday, TaskType.weekly);
     for (var task in weeklyTasks) {
       task.isComplete = false;
+      task.atComplete = null;
       taskRepository.updateTask(task);
     }
     ref.invalidate(tasksProvider);
@@ -77,6 +79,7 @@ class TaskController {
             firstDayOfMonth, TaskType.monthly);
     for (var task in monthlyTasks) {
       task.isComplete = false;
+      task.atComplete = null;
       taskRepository.updateTask(task);
     }
     ref.invalidate(tasksProvider);

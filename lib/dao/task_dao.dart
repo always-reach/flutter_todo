@@ -24,7 +24,7 @@ class TaskDao {
       DateTime completeDate, TaskType taskType) async {
     final db = await _databaseHelper.database;
     final maps = await db.query("tasks",
-        where: "taskType = ? AND atComplete = ?",
+        where: "taskType = ? AND atComplete < ? AND atComplete IS NOT NULL",
         whereArgs: [taskType.toInt(), completeDate.toIso8601String()]);
     return maps.map((map) => Task.fromMap(map)).toList();
   }
