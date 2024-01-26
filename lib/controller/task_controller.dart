@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/constant/enum.dart';
 import 'package:todo/entity/point.dart';
@@ -27,6 +28,7 @@ class TaskController {
   accomplishedTask(int id) async {
     Task task = await taskRepository.getTaskById(id);
     task.isComplete = true;
+    task.atComplete = DateTime.now();
     taskRepository.updateTask(task);
     Point point = await pointRepository.getPointById(1);
     point.point = point.point + task.point;
@@ -39,9 +41,12 @@ class TaskController {
   resetDailyTasksCompleteStatus() async {
     DateTime now = DateTime.now();
     DateTime todayAtFiveAM = DateTime(now.year, now.month, now.day, 5, 0, 0);
+    debugPrint("resetDailyTasksCompleteStatus");
+    debugPrint(todayAtFiveAM.toString());
     List<Task> dailyTasks =
         await taskRepository.getTasksCompletedByAtCompleteDateAndTaskType(
             todayAtFiveAM, TaskType.daily);
+    debugPrint(dailyTasks.toString());
     for (var task in dailyTasks) {
       task.isComplete = false;
       task.atComplete = null;
