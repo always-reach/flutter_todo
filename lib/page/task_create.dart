@@ -4,16 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/entity/task.dart';
 import 'package:todo/form/task_form.dart';
 import 'package:todo/provider/task_provider.dart';
+import 'package:todo/routing/delegate.dart';
 
 class TaskCreateForm extends ConsumerWidget {
   TaskCreateForm({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormBuilderState>();
 
-  Future<void> handleSubmit(
-      BuildContext context, WidgetRef ref, Task task) async {
+  void handleSubmit(BuildContext context, WidgetRef ref, Task task) async {
     ref.read(taskContollerProvider).addTask(task);
-    Navigator.pop(context);
+    final delegate = Router.of(context).routerDelegate as AppRouterDelegate;
+    delegate.backPage();
   }
 
   @override

@@ -4,14 +4,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/entity/reward.dart';
 import 'package:todo/form/reward_form.dart';
 import 'package:todo/provider/reward_provider.dart';
+import 'package:todo/routing/delegate.dart';
 
 class RewardCreatePage extends ConsumerWidget {
   RewardCreatePage({Key? key}) : super(key: key);
 
-  Future<void> handleSubmit(
-      Reward reward, BuildContext context, WidgetRef ref) async {
-    await ref.read(rewardContollerProvider).addReward(reward);
-    Navigator.pop(context);
+  void handleSubmit(Reward reward, BuildContext context, WidgetRef ref) async {
+    ref.read(rewardContollerProvider).addReward(reward);
+    final delegate = Router.of(context).routerDelegate as AppRouterDelegate;
+    delegate.backPage();
   }
 
   final formKey = GlobalKey<FormBuilderState>();

@@ -6,14 +6,14 @@ import 'package:todo/constant/error_message.dart';
 import 'package:todo/entity/task.dart';
 
 class TaskForm extends StatelessWidget {
-  final Future<void> Function(Task task) onSubmit;
+  final void Function(Task task) onSubmit;
   final Map<String, dynamic>? initialValue;
   const TaskForm({Key? key, required this.onSubmit, this.initialValue})
       : super(key: key);
 
-  void handleSubmit(Map<String, dynamic> formValue) async {
+  void handleSubmit(Map<String, dynamic> formValue) {
     var task = Task.fromMap(formValue);
-    await onSubmit(task);
+    onSubmit(task);
   }
 
   Map<String, dynamic> formValue() {

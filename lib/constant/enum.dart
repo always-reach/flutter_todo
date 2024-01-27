@@ -15,3 +15,13 @@ enum TaskType {
     }
   }
 }
+
+enum PageType {
+  bottomNavigator,
+  tasks,
+  taskCreate,
+  taskDetail,
+  rewards,
+  rewardCreate,
+  rewardDetail,
+}

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/constant/enum.dart';
-import 'package:todo/page/task_create.dart';
+import 'package:todo/routing/path.dart';
 import 'package:todo/widget/task_section.dart';
 
 class TaskList extends ConsumerWidget {
@@ -23,11 +23,9 @@ class TaskList extends ConsumerWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => TaskCreateForm(key: UniqueKey())),
-            );
+            Router.of(context)
+                .routerDelegate
+                .setNewRoutePath(RoutePath.taskCreate());
           },
           child: const Icon(Icons.add),
         ));
