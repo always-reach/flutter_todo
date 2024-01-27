@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/entity/reward.dart';
 import 'package:todo/form/reward_form.dart';
 import 'package:todo/provider/reward_provider.dart';
+import 'package:todo/routing/delegate.dart';
 
 class RewardDetailPage extends ConsumerWidget {
   final int id;
@@ -11,10 +12,15 @@ class RewardDetailPage extends ConsumerWidget {
 
   final _formKey = GlobalKey<FormBuilderState>();
 
+  void backPage(BuildContext context) {
+    final delegate = Router.of(context).routerDelegate as AppRouterDelegate;
+    delegate.backPage();
+  }
+
   void handleSubmit(Reward reward, WidgetRef ref, BuildContext context) {
     reward.id = id;
     ref.read(rewardContollerProvider).updateReward(reward);
-    Navigator.pop(context);
+    backPage(context);
   }
 
   @override
@@ -29,14 +35,14 @@ class RewardDetailPage extends ConsumerWidget {
               icon: const Icon(Icons.check),
               onPressed: () {
                 ref.read(rewardContollerProvider).receiveReward(id);
-                Navigator.pop(context);
+                backPage(context);
               },
             ),
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
                 ref.read(rewardContollerProvider).deleteReward(id);
-                Navigator.pop(context);
+                backPage(context);
               },
             ),
           ],

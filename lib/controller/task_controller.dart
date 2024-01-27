@@ -21,6 +21,7 @@ class TaskController {
   addTask(Task task) async {
     task.isComplete = false;
     taskRepository.insertTask(task);
+    ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);
     ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
@@ -33,6 +34,7 @@ class TaskController {
     Point point = await pointRepository.getPointById(1);
     point.point = point.point + task.point;
     await pointRepository.updatePoint(point);
+    ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);
     ref.invalidate(pointProvider);
     ref.invalidate(tasksFilteredByTaskTypeProvider);
@@ -52,6 +54,7 @@ class TaskController {
       task.atComplete = null;
       taskRepository.updateTask(task);
     }
+    ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);
     ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
@@ -72,6 +75,7 @@ class TaskController {
       task.atComplete = null;
       taskRepository.updateTask(task);
     }
+    ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);
     ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
@@ -87,18 +91,21 @@ class TaskController {
       task.atComplete = null;
       taskRepository.updateTask(task);
     }
+    ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);
     ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
 
   updateTask(Task task) async {
     taskRepository.updateTask(task);
+    ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);
     ref.invalidate(tasksFilteredByTaskTypeProvider);
   }
 
   deleteTaskById(int id) async {
     taskRepository.deleteTaskById(id);
+    ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);
     ref.invalidate(tasksFilteredByTaskTypeProvider);
   }

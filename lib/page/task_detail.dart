@@ -4,17 +4,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/entity/task.dart';
 import 'package:todo/form/task_form.dart';
 import 'package:todo/provider/task_provider.dart';
+import 'package:todo/routing/delegate.dart';
 
 class TaskDetailPage extends ConsumerWidget {
   final int id;
   TaskDetailPage({Key? key, required this.id}) : super(key: key);
   final _formKey = GlobalKey<FormBuilderState>();
 
+  void backPage(BuildContext context) {
+    final delegate = Router.of(context).routerDelegate as AppRouterDelegate;
+    delegate.backPage();
+  }
+
   Future<void> handleSubmit(
       Task task, WidgetRef ref, BuildContext context) async {
     task.id = id;
     ref.read(taskContollerProvider).updateTask(task);
-    Navigator.pop(context);
+    backPage(context);
   }
 
   @override
@@ -28,14 +34,14 @@ class TaskDetailPage extends ConsumerWidget {
               icon: const Icon(Icons.check),
               onPressed: () {
                 ref.read(taskContollerProvider).accomplishedTask(id);
-                Navigator.pop(context);
+                backPage(context);
               },
             ),
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
                 ref.read(taskContollerProvider).deleteTaskById(id);
-                Navigator.pop(context);
+                backPage(context);
               },
             ),
           ],

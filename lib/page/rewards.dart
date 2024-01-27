@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo/page/reward_create.dart';
 import 'package:todo/provider/point_provider.dart';
 import 'package:todo/provider/reward_provider.dart';
+import 'package:todo/routing/path.dart';
 import 'package:todo/widget/count_up.dart';
 import 'package:todo/widget/reward_item.dart';
 
-class RewordList extends ConsumerWidget {
-  const RewordList({Key? key}) : super(key: key);
+class RewardList extends ConsumerWidget {
+  const RewardList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,11 +56,9 @@ class RewordList extends ConsumerWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => RewardCreatePage(key: UniqueKey())),
-            );
+            Router.of(context)
+                .routerDelegate
+                .setNewRoutePath(RoutePath.rewardCreate());
           },
           child: const Icon(Icons.add),
         ));

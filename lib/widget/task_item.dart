@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/entity/task.dart';
-import 'package:todo/page/task_detail.dart';
+import 'package:todo/routing/path.dart';
 
 Widget taskItem(Task task, BuildContext context) {
   return ListTile(
@@ -15,12 +15,9 @@ Widget taskItem(Task task, BuildContext context) {
           color: task.isComplete ? Colors.grey : Colors.black,
         )),
     onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                TaskDetailPage(key: UniqueKey(), id: task.id!)),
-      );
+      Router.of(context)
+          .routerDelegate
+          .setNewRoutePath(RoutePath.taskDetails(task.id));
     },
     dense: true,
     tileColor: task.isComplete ? Colors.grey[200] : Colors.white,

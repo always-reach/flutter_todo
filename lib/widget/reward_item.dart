@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/entity/reward.dart';
-import 'package:todo/page/reward_detail.dart';
+import 'package:todo/routing/path.dart';
 
 Widget rewardItem(Reward reward, BuildContext context) {
   return ListTile(
@@ -9,12 +9,9 @@ Widget rewardItem(Reward reward, BuildContext context) {
     dense: true,
     tileColor: Colors.white,
     onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                RewardDetailPage(key: UniqueKey(), id: reward.id!)),
-      );
+      Router.of(context)
+          .routerDelegate
+          .setNewRoutePath(RoutePath.rewardDetails(reward.id));
     },
   );
 }

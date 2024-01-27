@@ -17,6 +17,7 @@ class RewardController {
 
   Future<void> addReward(Reward reward) async {
     await rewardRepository.insertReward(reward);
+    ref.invalidate(rewardProvider);
     ref.invalidate(rewardsProvider);
   }
 
@@ -28,16 +29,19 @@ class RewardController {
     }
     point.point = point.point - reward.point;
     await pointRepository.updatePoint(point);
+    ref.invalidate(rewardProvider);
     ref.invalidate(pointProvider);
   }
 
   Future<void> updateReward(Reward reward) async {
     await rewardRepository.updateReward(reward);
+    ref.invalidate(rewardProvider);
     ref.invalidate(rewardsProvider);
   }
 
   Future<void> deleteReward(int id) async {
     await rewardRepository.deleteRewardById(id);
+    ref.invalidate(rewardProvider);
     ref.invalidate(rewardsProvider);
   }
 }
