@@ -60,21 +60,20 @@ class TaskController {
   }
 
   resetWeeklyTasksCompleteStatus() async {
+    // その週の月曜日朝5時以前のデータをリセット
     DateTime now = DateTime.now();
-    DateTime todayAtFiveAM = DateTime(now.year, now.month, now.day, 5, 0, 0);
-    int weekday = now.weekday;
-    DateTime lastSunday = todayAtFiveAM.subtract(Duration(days: weekday));
-    if (weekday == 7) {
-      lastSunday = lastSunday.subtract(const Duration(days: 7));
-    }
+    DateTime monday = now.subtract(Duration(days: now.weekday - 1));
+    DateTime mondayAtFiveAM =
+        DateTime(monday.year, monday.month, monday.day, 5, 0, 0);
     List<Task> weeklyTasks =
         await taskRepository.getTasksCompletedByAtCompleteDateAndTaskType(
-            lastSunday, TaskType.weekly);
+            mondayAtFiveAM, TaskType.weekly);
     for (var task in weeklyTasks) {
       task.isComplete = false;
       task.atComplete = null;
       taskRepository.updateTask(task);
     }
+
     ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);
     ref.invalidate(tasksFilteredByTaskTypeProvider);
