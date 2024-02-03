@@ -75,9 +75,6 @@ class RewardForm extends StatelessWidget {
               if (currentState != null && currentState.saveAndValidate()) {
                 var formValue = Map<String, dynamic>.from(currentState.value);
                 handleSubmit(formValue);
-              } else {
-                debugPrint(formKey.currentState?.value.toString());
-                debugPrint('validation failed');
               }
             },
             shape: RoundedRectangleBorder(
