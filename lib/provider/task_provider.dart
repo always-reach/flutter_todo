@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/constant/enum.dart';
 import 'package:todo/controller/task_controller.dart';
-import 'package:todo/entity/task.dart';
+import 'package:todo/entity/task/task.dart';
 import 'package:todo/provider/point_provider.dart';
 import 'package:todo/repository/task_imp.dart';
 

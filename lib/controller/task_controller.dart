@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/constant/enum.dart';
 import 'package:todo/entity/point.dart';
-import 'package:todo/entity/task.dart';
+import 'package:todo/entity/task/task.dart';
 import 'package:todo/provider/point_provider.dart';
 import 'package:todo/provider/task_provider.dart';
 import 'package:todo/repository/point_imp.dart';
@@ -19,8 +19,8 @@ class TaskController {
       required this.pointRepository});
 
   addTask(Task task) async {
-    task.isComplete = false;
-    taskRepository.insertTask(task);
+    final Task updatedTask = task.copyWith(isComplete: false);
+    taskRepository.insertTask(updatedTask);
     ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);
     ref.invalidate(tasksFilteredByTaskTypeProvider);
@@ -28,9 +28,9 @@ class TaskController {
 
   accomplishedTask(int id) async {
     Task task = await taskRepository.getTaskById(id);
-    task.isComplete = true;
-    task.atComplete = DateTime.now();
-    taskRepository.updateTask(task);
+    final updatedTask =
+        task.copyWith(isComplete: true, atComplete: DateTime.now());
+    taskRepository.updateTask(updatedTask);
     Point point = await pointRepository.getPointById(1);
     point.point = point.point + task.point;
     await pointRepository.updatePoint(point);
@@ -50,9 +50,9 @@ class TaskController {
             todayAtFiveAM, TaskType.daily);
     debugPrint(dailyTasks.toString());
     for (var task in dailyTasks) {
-      task.isComplete = false;
-      task.atComplete = null;
-      taskRepository.updateTask(task);
+      final Task updatedTask =
+          task.copyWith(isComplete: false, atComplete: null);
+      taskRepository.updateTask(updatedTask);
     }
     ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);
@@ -69,9 +69,10 @@ class TaskController {
         await taskRepository.getTasksCompletedByAtCompleteDateAndTaskType(
             mondayAtFiveAM, TaskType.weekly);
     for (var task in weeklyTasks) {
-      task.isComplete = false;
-      task.atComplete = null;
-      taskRepository.updateTask(task);
+      final Task updatedTask =
+          task.copyWith(isComplete: false, atComplete: null);
+
+      taskRepository.updateTask(updatedTask);
     }
 
     ref.invalidate(taskProvider);
@@ -86,9 +87,9 @@ class TaskController {
         await taskRepository.getTasksCompletedByAtCompleteDateAndTaskType(
             firstDayOfMonth, TaskType.monthly);
     for (var task in monthlyTasks) {
-      task.isComplete = false;
-      task.atComplete = null;
-      taskRepository.updateTask(task);
+      final Task updatedTask =
+          task.copyWith(isComplete: false, atComplete: null);
+      taskRepository.updateTask(updatedTask);
     }
     ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);

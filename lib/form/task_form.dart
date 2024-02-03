@@ -3,7 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:todo/constant/enum.dart';
 import 'package:todo/constant/error_message.dart';
-import 'package:todo/entity/task.dart';
+import 'package:todo/entity/task/task.dart';
 
 class TaskForm extends StatelessWidget {
   final void Function(Task task) onSubmit;
@@ -12,7 +12,7 @@ class TaskForm extends StatelessWidget {
       : super(key: key);
 
   void handleSubmit(Map<String, dynamic> formValue) {
-    var task = Task.fromMap(formValue);
+    var task = Task.fromJson(formValue);
     onSubmit(task);
   }
 

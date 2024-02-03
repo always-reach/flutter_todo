@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/entity/task.dart';
+import 'package:todo/entity/task/task.dart';
 import 'package:todo/routing/path.dart';
 
 Widget taskItem(Task task, BuildContext context) {
