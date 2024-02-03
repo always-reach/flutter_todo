@@ -15,8 +15,8 @@ class TaskSection extends ConsumerWidget {
     return ExpansionTile(title: Text(title), children: <Widget>[
       ref.watch(tasksFilteredByTaskTypeProvider(taskType)).when(
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, stackTrace) => const Center(
-              child: Text("エラーが発生しました"),
+            error: (error, stackTrace) => Center(
+              child: Text(error.toString()),
             ),
             data: (tasks) {
               if (tasks.isEmpty) {

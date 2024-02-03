@@ -1,5 +1,5 @@
 import 'package:todo/dao/point_dao.dart';
-import 'package:todo/entity/point.dart';
+import 'package:todo/entity/point/point.dart';
 import 'package:todo/helper/db_helper.dart';
 import 'package:todo/repository/point_abs.dart';
 

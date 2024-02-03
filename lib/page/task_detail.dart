@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo/entity/task.dart';
+import 'package:todo/entity/task/task.dart';
 import 'package:todo/form/task_form.dart';
 import 'package:todo/provider/task_provider.dart';
 import 'package:todo/routing/delegate.dart';
@@ -18,8 +18,8 @@ class TaskDetailPage extends ConsumerWidget {
 
   Future<void> handleSubmit(
       Task task, WidgetRef ref, BuildContext context) async {
-    task.id = id;
-    ref.read(taskContollerProvider).updateTask(task);
+    final Task updatedTask = task.copyWith(id: id);
+    ref.read(taskContollerProvider).updateTask(updatedTask);
     backPage(context);
   }
 
@@ -55,7 +55,7 @@ class TaskDetailPage extends ConsumerWidget {
               return TaskForm(
                   key: _formKey,
                   onSubmit: (task) => handleSubmit(task, ref, context),
-                  initialValue: task.toMap());
+                  initialValue: task.toJson());
             }));
   }
 }

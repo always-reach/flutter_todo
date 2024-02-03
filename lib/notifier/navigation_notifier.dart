@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/constant/enum.dart';
 
@@ -22,8 +21,6 @@ class NavigationNotifier extends StateNotifier<NavigationData> {
   }
 
   bool isPageType(PageType pageType) {
-    debugPrint("state selectedId: ${state.selectedId}");
-    debugPrint("state pageType: ${state.pageType}");
     switch (pageType) {
       case PageType.tasks:
       case PageType.taskCreate:

@@ -1,4 +1,4 @@
-import 'package:todo/entity/reward.dart';
+import 'package:todo/entity/reward/reward.dart';
 
 abstract class RewardRepositoryAbs {
   Future<List<Reward>> getAllRewards();

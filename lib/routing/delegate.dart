@@ -46,8 +46,6 @@ class AppRouterDelegate extends RouterDelegate<RoutePath>
   Widget build(BuildContext context) {
     NavigationData navigationData = ref.watch(navigationProvider);
     NavigationNotifier notifier = ref.read(navigationProvider.notifier);
-    debugPrint("current page: ${navigationData.pageType}");
-    debugPrint("current id: ${navigationData.selectedId}");
     List<Page> pages = [
       const MaterialPage(key: ValueKey('Home'), child: BottomNavigator()),
     ];
@@ -79,7 +77,6 @@ class AppRouterDelegate extends RouterDelegate<RoutePath>
   @override
   RoutePath get currentConfiguration {
     final NavigationData data = ref.watch(navigationProvider);
-    debugPrint("currentConfiguration page: ${data.pageType}");
     switch (data.pageType) {
       case PageType.tasks:
         return RoutePath.tasks();

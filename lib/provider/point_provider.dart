@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo/entity/point.dart';
+import 'package:todo/entity/point/point.dart';
 import 'package:todo/repository/point_imp.dart';
 
 final pointRepositoryProvider = Provider<PointRepository>((ref) {

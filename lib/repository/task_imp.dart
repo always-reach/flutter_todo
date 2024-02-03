@@ -1,6 +1,6 @@
 import 'package:todo/constant/enum.dart';
 import 'package:todo/dao/task_dao.dart';
-import 'package:todo/entity/task.dart';
+import 'package:todo/entity/task/task.dart';
 import 'package:todo/helper/db_helper.dart';
 import 'package:todo/repository/task_abs.dart';
 

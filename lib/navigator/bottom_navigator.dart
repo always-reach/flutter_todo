@@ -11,8 +11,6 @@ class BottomNavigator extends StatelessWidget {
         Router.of(context).routerDelegate as AppRouterDelegate;
     return Consumer(
       builder: (BuildContext context, WidgetRef child, Widget? widget) {
-        debugPrint(
-            "current index: ${routerDelegate.getBottomNavigationIndex()}");
         return Scaffold(
           body: routerDelegate.getTabPage(),
           bottomNavigationBar: BottomNavigationBar(

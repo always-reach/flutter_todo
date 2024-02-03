@@ -1,5 +1,5 @@
 import 'package:todo/constant/enum.dart';
-import 'package:todo/entity/task.dart';
+import 'package:todo/entity/task/task.dart';
 
 abstract class TaskRepositoryAbs {
   Future<List<Task>> getAllTasks();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo/entity/task.dart';
+import 'package:todo/entity/task/task.dart';
 import 'package:todo/form/task_form.dart';
 import 'package:todo/provider/task_provider.dart';
 import 'package:todo/routing/delegate.dart';
