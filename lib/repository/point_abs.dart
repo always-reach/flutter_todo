@@ -1,4 +1,4 @@
-import 'package:todo/entity/point.dart';
+import 'package:todo/entity/point/point.dart';
 
 abstract class PointRepositoryAbs {
   Future<Point> getPointById(int id);

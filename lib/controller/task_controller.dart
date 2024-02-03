@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/constant/enum.dart';
-import 'package:todo/entity/point.dart';
+import 'package:todo/entity/point/point.dart';
 import 'package:todo/entity/task/task.dart';
 import 'package:todo/provider/point_provider.dart';
 import 'package:todo/provider/task_provider.dart';
@@ -32,8 +32,8 @@ class TaskController {
         task.copyWith(isComplete: true, atComplete: DateTime.now());
     taskRepository.updateTask(updatedTask);
     Point point = await pointRepository.getPointById(1);
-    point.point = point.point + task.point;
-    await pointRepository.updatePoint(point);
+    final Point updatedPoint = point.copyWith(point: point.point + task.point);
+    await pointRepository.updatePoint(updatedPoint);
     ref.invalidate(taskProvider);
     ref.invalidate(tasksProvider);
     ref.invalidate(pointProvider);

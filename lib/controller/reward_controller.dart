@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo/entity/point.dart';
+import 'package:todo/entity/point/point.dart';
 import 'package:todo/entity/reward/reward.dart';
 import 'package:todo/provider/point_provider.dart';
 import 'package:todo/provider/reward_provider.dart';
@@ -27,8 +27,9 @@ class RewardController {
     if (point.point < reward.point) {
       return;
     }
-    point.point = point.point - reward.point;
-    await pointRepository.updatePoint(point);
+    final Point updatedPoint =
+        point.copyWith(point: point.point - reward.point);
+    await pointRepository.updatePoint(updatedPoint);
     ref.invalidate(rewardProvider);
     ref.invalidate(pointProvider);
   }
