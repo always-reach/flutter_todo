@@ -1,4 +1,4 @@
-import 'package:todo/entity/reward.dart';
+import 'package:todo/entity/reward/reward.dart';
 import 'package:todo/helper/db_helper.dart';
 
 class RewardDao {
@@ -8,23 +8,23 @@ class RewardDao {
   Future<List<Reward>> getAllRewards() async {
     final db = await _databaseHelper.database;
     final maps = await db.query("rewards");
-    return maps.map((map) => Reward.fromMap(map)).toList();
+    return maps.map((map) => Reward.fromJson(map)).toList();
   }
 
   Future<Reward> getRewardById(int id) async {
     final db = await _databaseHelper.database;
     final maps = await db.query("rewards", where: "id = ?", whereArgs: [id]);
-    return Reward.fromMap(maps.first);
+    return Reward.fromJson(maps.first);
   }
 
   Future<void> insertReward(Reward reward) async {
     final db = await _databaseHelper.database;
-    db.insert("rewards", reward.toMap());
+    db.insert("rewards", reward.toJson());
   }
 
   Future<void> updateReward(Reward reward) async {
     final db = await _databaseHelper.database;
-    db.update("rewards", reward.toMap(),
+    db.update("rewards", reward.toJson(),
         where: "id = ?", whereArgs: [reward.id]);
   }
 

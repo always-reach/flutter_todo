@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/entity/point.dart';
-import 'package:todo/entity/reward.dart';
+import 'package:todo/entity/reward/reward.dart';
 import 'package:todo/provider/point_provider.dart';
 import 'package:todo/provider/reward_provider.dart';
 import 'package:todo/repository/point_imp.dart';

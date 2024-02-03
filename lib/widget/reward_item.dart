@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/entity/reward.dart';
+import 'package:todo/entity/reward/reward.dart';
 import 'package:todo/routing/path.dart';
 
 Widget rewardItem(Reward reward, BuildContext context) {

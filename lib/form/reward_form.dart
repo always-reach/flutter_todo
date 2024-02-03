@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:todo/constant/error_message.dart';
-import 'package:todo/entity/reward.dart';
+import 'package:todo/entity/reward/reward.dart';
 
 class RewardForm extends StatelessWidget {
   final void Function(Reward reward) onSubmit;
@@ -11,7 +11,7 @@ class RewardForm extends StatelessWidget {
       : super(key: key);
 
   void handleSubmit(Map<String, dynamic> formValue) {
-    var reward = Reward.fromMap(formValue);
+    var reward = Reward.fromJson(formValue);
     onSubmit(reward);
   }
 

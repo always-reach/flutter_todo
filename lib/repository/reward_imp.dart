@@ -1,5 +1,5 @@
 import 'package:todo/dao/reward_dao.dart';
-import 'package:todo/entity/reward.dart';
+import 'package:todo/entity/reward/reward.dart';
 import 'package:todo/helper/db_helper.dart';
 import 'package:todo/repository/reward_abs.dart';
 
