@@ -10,6 +10,7 @@ class Reward with _$Reward {
     required String title,
     String? description,
     required int point,
+    required int totalCount,
   }) = _Reward;
 
   factory Reward.fromJson(Map<String, dynamic> json) => _$RewardFromJson(json);

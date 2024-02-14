@@ -18,6 +18,7 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       atComplete: json['atComplete'] == null
           ? null
           : DateTime.parse(json['atComplete'] as String),
+      completeCount: json['completeCount'] as int,
     );
 
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
@@ -29,4 +30,5 @@ Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
       'point': instance.point,
       'taskType': const TaskTypeConverter().toJson(instance.taskType),
       'atComplete': instance.atComplete?.toIso8601String(),
+      'completeCount': instance.completeCount,
     };
