@@ -33,6 +33,12 @@ class DatabaseHelper {
       INSERT INTO points (point) VALUES (0);
     '''
     ],
+    "2": [
+      '''
+      ALTER TABLE tasks ADD COLUMN completeCount INTEGER NOT NULL DEFAULT 0;
+      ALTER TABLE tasks ADD COLUMN totalCount INTEGER NOT NULL DEFAULT 0;
+      '''
+    ],
   };
 
   DatabaseHelper._privateConstructor();
