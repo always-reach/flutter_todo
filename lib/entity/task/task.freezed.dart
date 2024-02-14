@@ -196,7 +196,7 @@ class _$TaskImpl implements _Task {
       required this.point,
       @TaskTypeConverter() required this.taskType,
       this.atComplete,
-      required this.completeCount});
+      this.completeCount = 0});
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskImplFromJson(json);
@@ -219,6 +219,7 @@ class _$TaskImpl implements _Task {
   @override
   final DateTime? atComplete;
   @override
+  @JsonKey()
   final int completeCount;
 
   @override
@@ -274,7 +275,7 @@ abstract class _Task implements Task {
       required final int point,
       @TaskTypeConverter() required final TaskType taskType,
       final DateTime? atComplete,
-      required final int completeCount}) = _$TaskImpl;
+      final int completeCount}) = _$TaskImpl;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
 

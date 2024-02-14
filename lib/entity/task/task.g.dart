@@ -18,7 +18,7 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       atComplete: json['atComplete'] == null
           ? null
           : DateTime.parse(json['atComplete'] as String),
-      completeCount: json['completeCount'] as int,
+      completeCount: json['completeCount'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>

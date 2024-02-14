@@ -6,7 +6,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class DatabaseHelper {
   static const _databaseName = "todo.db";
-  static const _databaseVersion = 2;
+  static const _databaseVersion = 3;
 
   final Map<String, List<String>> _scripts = {
     '1': [
@@ -33,10 +33,10 @@ class DatabaseHelper {
       INSERT INTO points (point) VALUES (0);
     '''
     ],
-    "2": [
+    "3": [
       '''
       ALTER TABLE tasks ADD COLUMN completeCount INTEGER NOT NULL DEFAULT 0;
-      ALTER TABLE tasks ADD COLUMN totalCount INTEGER NOT NULL DEFAULT 0;
+      ALTER TABLE rewards ADD COLUMN totalCount INTEGER NOT NULL DEFAULT 0;
       '''
     ],
   };
@@ -61,7 +61,6 @@ class DatabaseHelper {
       throw Exception("Platform not supported");
     }
     final path = join(dbPath, _databaseName);
-
     return await openDatabase(
       path,
       version: _databaseVersion,
