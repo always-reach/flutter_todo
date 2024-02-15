@@ -5,7 +5,7 @@ import 'package:todo/routing/path.dart';
 Widget rewardItem(Reward reward, BuildContext context) {
   return ListTile(
     title: Text(reward.title),
-    subtitle: Text(reward.description ?? ''),
+    subtitle: Text("受け取り回数:${reward.totalCount} ${reward.description ?? ''}"),
     dense: true,
     tileColor: Colors.white,
     onTap: () {

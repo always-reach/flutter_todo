@@ -30,7 +30,11 @@ class RewardController {
     final Point updatedPoint =
         point.copyWith(point: point.point - reward.point);
     await pointRepository.updatePoint(updatedPoint);
+    final Reward updatedReward =
+        reward.copyWith(totalCount: reward.totalCount + 1);
+    await rewardRepository.updateReward(updatedReward);
     ref.invalidate(rewardProvider);
+    ref.invalidate(rewardsProvider);
     ref.invalidate(pointProvider);
   }
 
