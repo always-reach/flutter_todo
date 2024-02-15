@@ -11,7 +11,7 @@ _$RewardImpl _$$RewardImplFromJson(Map<String, dynamic> json) => _$RewardImpl(
       title: json['title'] as String,
       description: json['description'] as String?,
       point: json['point'] as int,
-      totalCount: json['totalCount'] as int,
+      totalCount: json['totalCount'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$RewardImplToJson(_$RewardImpl instance) =>

@@ -145,7 +145,7 @@ class _$RewardImpl implements _Reward {
       required this.title,
       this.description,
       required this.point,
-      required this.totalCount});
+      this.totalCount = 0});
 
   factory _$RewardImpl.fromJson(Map<String, dynamic> json) =>
       _$$RewardImplFromJson(json);
@@ -159,6 +159,7 @@ class _$RewardImpl implements _Reward {
   @override
   final int point;
   @override
+  @JsonKey()
   final int totalCount;
 
   @override
@@ -205,7 +206,7 @@ abstract class _Reward implements Reward {
       required final String title,
       final String? description,
       required final int point,
-      required final int totalCount}) = _$RewardImpl;
+      final int totalCount}) = _$RewardImpl;
 
   factory _Reward.fromJson(Map<String, dynamic> json) = _$RewardImpl.fromJson;
 
