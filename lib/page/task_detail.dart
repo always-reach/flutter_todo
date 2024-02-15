@@ -18,7 +18,14 @@ class TaskDetailPage extends ConsumerWidget {
 
   Future<void> handleSubmit(
       Task task, WidgetRef ref, BuildContext context) async {
-    final Task updatedTask = task.copyWith(id: id);
+    final Task currentTask = await ref.read(taskProvider(id).future);
+
+    final Task updatedTask = currentTask.copyWith(
+        title: task.title,
+        description: task.description,
+        point: task.point,
+        taskType: task.taskType);
+    debugPrint(updatedTask.toJson().toString());
     ref.read(taskContollerProvider).updateTask(updatedTask);
     backPage(context);
   }
