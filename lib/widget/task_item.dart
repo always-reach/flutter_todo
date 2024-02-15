@@ -8,7 +8,7 @@ Widget taskItem(Task task, BuildContext context) {
         ? const Icon(Icons.done, color: Colors.green)
         : const Icon(Icons.hourglass_empty),
     subtitle: Text(
-      task.description ?? '',
+      "${task.description ?? ""} 獲得PT:${task.point} 達成回数: ${task.completeCount} ",
     ),
     title: Text(task.title,
         style: TextStyle(
