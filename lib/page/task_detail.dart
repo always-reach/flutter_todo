@@ -25,7 +25,6 @@ class TaskDetailPage extends ConsumerWidget {
         description: task.description,
         point: task.point,
         taskType: task.taskType);
-    debugPrint(updatedTask.toJson().toString());
     ref.read(taskContollerProvider).updateTask(updatedTask);
     backPage(context);
   }

@@ -17,8 +17,13 @@ class RewardDetailPage extends ConsumerWidget {
     delegate.backPage();
   }
 
-  void handleSubmit(Reward reward, WidgetRef ref, BuildContext context) {
-    final Reward updatedReward = reward.copyWith(id: id);
+  Future<void> handleSubmit(
+      Reward reward, WidgetRef ref, BuildContext context) async {
+    final Reward currentReward = await ref.read(rewardProvider(id).future);
+    final Reward updatedReward = currentReward.copyWith(
+        title: reward.title,
+        description: reward.description,
+        point: reward.point);
     ref.read(rewardContollerProvider).updateReward(updatedReward);
     backPage(context);
   }
