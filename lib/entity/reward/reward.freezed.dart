@@ -12,7 +12,7 @@ part of 'reward.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Reward _$RewardFromJson(Map<String, dynamic> json) {
   return _Reward.fromJson(json);
@@ -24,6 +24,7 @@ mixin _$Reward {
   String get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   int get point => throw _privateConstructorUsedError;
+  int get totalCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,8 @@ abstract class $RewardCopyWith<$Res> {
   factory $RewardCopyWith(Reward value, $Res Function(Reward) then) =
       _$RewardCopyWithImpl<$Res, Reward>;
   @useResult
-  $Res call({int? id, String title, String? description, int point});
+  $Res call(
+      {int? id, String title, String? description, int point, int totalCount});
 }
 
 /// @nodoc
@@ -55,6 +57,7 @@ class _$RewardCopyWithImpl<$Res, $Val extends Reward>
     Object? title = null,
     Object? description = freezed,
     Object? point = null,
+    Object? totalCount = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -73,6 +76,10 @@ class _$RewardCopyWithImpl<$Res, $Val extends Reward>
           ? _value.point
           : point // ignore: cast_nullable_to_non_nullable
               as int,
+      totalCount: null == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -84,7 +91,8 @@ abstract class _$$RewardImplCopyWith<$Res> implements $RewardCopyWith<$Res> {
       __$$RewardImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? id, String title, String? description, int point});
+  $Res call(
+      {int? id, String title, String? description, int point, int totalCount});
 }
 
 /// @nodoc
@@ -102,6 +110,7 @@ class __$$RewardImplCopyWithImpl<$Res>
     Object? title = null,
     Object? description = freezed,
     Object? point = null,
+    Object? totalCount = null,
   }) {
     return _then(_$RewardImpl(
       id: freezed == id
@@ -120,6 +129,10 @@ class __$$RewardImplCopyWithImpl<$Res>
           ? _value.point
           : point // ignore: cast_nullable_to_non_nullable
               as int,
+      totalCount: null == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -128,7 +141,11 @@ class __$$RewardImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RewardImpl implements _Reward {
   const _$RewardImpl(
-      {this.id, required this.title, this.description, required this.point});
+      {this.id,
+      required this.title,
+      this.description,
+      required this.point,
+      this.totalCount = 0});
 
   factory _$RewardImpl.fromJson(Map<String, dynamic> json) =>
       _$$RewardImplFromJson(json);
@@ -141,10 +158,13 @@ class _$RewardImpl implements _Reward {
   final String? description;
   @override
   final int point;
+  @override
+  @JsonKey()
+  final int totalCount;
 
   @override
   String toString() {
-    return 'Reward(id: $id, title: $title, description: $description, point: $point)';
+    return 'Reward(id: $id, title: $title, description: $description, point: $point, totalCount: $totalCount)';
   }
 
   @override
@@ -156,12 +176,15 @@ class _$RewardImpl implements _Reward {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.point, point) || other.point == point));
+            (identical(other.point, point) || other.point == point) &&
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, point);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, description, point, totalCount);
 
   @JsonKey(ignore: true)
   @override
@@ -182,7 +205,8 @@ abstract class _Reward implements Reward {
       {final int? id,
       required final String title,
       final String? description,
-      required final int point}) = _$RewardImpl;
+      required final int point,
+      final int totalCount}) = _$RewardImpl;
 
   factory _Reward.fromJson(Map<String, dynamic> json) = _$RewardImpl.fromJson;
 
@@ -194,6 +218,8 @@ abstract class _Reward implements Reward {
   String? get description;
   @override
   int get point;
+  @override
+  int get totalCount;
   @override
   @JsonKey(ignore: true)
   _$$RewardImplCopyWith<_$RewardImpl> get copyWith =>

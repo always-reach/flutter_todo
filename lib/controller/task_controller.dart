@@ -27,8 +27,10 @@ class TaskController {
 
   accomplishedTask(int id) async {
     Task task = await taskRepository.getTaskById(id);
-    final updatedTask =
-        task.copyWith(isComplete: true, atComplete: DateTime.now());
+    final updatedTask = task.copyWith(
+        isComplete: true,
+        atComplete: DateTime.now(),
+        completeCount: task.completeCount + 1);
     taskRepository.updateTask(updatedTask);
     Point point = await pointRepository.getPointById(1);
     final Point updatedPoint = point.copyWith(point: point.point + task.point);

@@ -12,7 +12,7 @@ part of 'task.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Task _$TaskFromJson(Map<String, dynamic> json) {
   return _Task.fromJson(json);
@@ -29,6 +29,7 @@ mixin _$Task {
   @TaskTypeConverter()
   TaskType get taskType => throw _privateConstructorUsedError;
   DateTime? get atComplete => throw _privateConstructorUsedError;
+  int get completeCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +48,8 @@ abstract class $TaskCopyWith<$Res> {
       @BoolIntConverter() bool isComplete,
       int point,
       @TaskTypeConverter() TaskType taskType,
-      DateTime? atComplete});
+      DateTime? atComplete,
+      int completeCount});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? point = null,
     Object? taskType = null,
     Object? atComplete = freezed,
+    Object? completeCount = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -100,6 +103,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.atComplete
           : atComplete // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      completeCount: null == completeCount
+          ? _value.completeCount
+          : completeCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -118,7 +125,8 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       @BoolIntConverter() bool isComplete,
       int point,
       @TaskTypeConverter() TaskType taskType,
-      DateTime? atComplete});
+      DateTime? atComplete,
+      int completeCount});
 }
 
 /// @nodoc
@@ -138,6 +146,7 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? point = null,
     Object? taskType = null,
     Object? atComplete = freezed,
+    Object? completeCount = null,
   }) {
     return _then(_$TaskImpl(
       id: freezed == id
@@ -168,6 +177,10 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.atComplete
           : atComplete // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      completeCount: null == completeCount
+          ? _value.completeCount
+          : completeCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -182,7 +195,8 @@ class _$TaskImpl implements _Task {
       @BoolIntConverter() this.isComplete = false,
       required this.point,
       @TaskTypeConverter() required this.taskType,
-      this.atComplete});
+      this.atComplete,
+      this.completeCount = 0});
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskImplFromJson(json);
@@ -204,10 +218,13 @@ class _$TaskImpl implements _Task {
   final TaskType taskType;
   @override
   final DateTime? atComplete;
+  @override
+  @JsonKey()
+  final int completeCount;
 
   @override
   String toString() {
-    return 'Task(id: $id, title: $title, description: $description, isComplete: $isComplete, point: $point, taskType: $taskType, atComplete: $atComplete)';
+    return 'Task(id: $id, title: $title, description: $description, isComplete: $isComplete, point: $point, taskType: $taskType, atComplete: $atComplete, completeCount: $completeCount)';
   }
 
   @override
@@ -225,13 +242,15 @@ class _$TaskImpl implements _Task {
             (identical(other.taskType, taskType) ||
                 other.taskType == taskType) &&
             (identical(other.atComplete, atComplete) ||
-                other.atComplete == atComplete));
+                other.atComplete == atComplete) &&
+            (identical(other.completeCount, completeCount) ||
+                other.completeCount == completeCount));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, title, description,
-      isComplete, point, taskType, atComplete);
+      isComplete, point, taskType, atComplete, completeCount);
 
   @JsonKey(ignore: true)
   @override
@@ -255,7 +274,8 @@ abstract class _Task implements Task {
       @BoolIntConverter() final bool isComplete,
       required final int point,
       @TaskTypeConverter() required final TaskType taskType,
-      final DateTime? atComplete}) = _$TaskImpl;
+      final DateTime? atComplete,
+      final int completeCount}) = _$TaskImpl;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
 
@@ -275,6 +295,8 @@ abstract class _Task implements Task {
   TaskType get taskType;
   @override
   DateTime? get atComplete;
+  @override
+  int get completeCount;
   @override
   @JsonKey(ignore: true)
   _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>

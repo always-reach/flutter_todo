@@ -15,6 +15,7 @@ class Task with _$Task {
     required int point,
     @TaskTypeConverter() required TaskType taskType,
     DateTime? atComplete,
+    @Default(0) int completeCount,
   }) = _Task;
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);

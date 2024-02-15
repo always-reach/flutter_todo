@@ -6,7 +6,40 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class DatabaseHelper {
   static const _databaseName = "todo.db";
-  static const _databaseVersion = 2;
+  static const _databaseVersion = 3;
+
+  final Map<String, List<String>> _scripts = {
+    '1': [
+      '''
+      CREATE TABLE tasks(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        description TEXT,
+        isComplete INTEGER NOT NULL,
+        point INTEGER NOT NULL,
+        taskType INTEGER NOT NULL,
+        atComplete TEXT
+      );
+      CREATE TABLE rewards(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        description TEXT,
+        point INTEGER NOT NULL
+      );
+      CREATE TABLE points(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        point INTEGER NOT NULL
+      );
+      INSERT INTO points (point) VALUES (0);
+    '''
+    ],
+    "3": [
+      '''
+      ALTER TABLE tasks ADD COLUMN completeCount INTEGER NOT NULL DEFAULT 0;
+      ALTER TABLE rewards ADD COLUMN totalCount INTEGER NOT NULL DEFAULT 0;
+      '''
+    ],
+  };
 
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -28,35 +61,28 @@ class DatabaseHelper {
       throw Exception("Platform not supported");
     }
     final path = join(dbPath, _databaseName);
-
-    return await openDatabase(path,
-        version: _databaseVersion, onCreate: _onCreate, onUpgrade: _onUPgrade);
+    return await openDatabase(
+      path,
+      version: _databaseVersion,
+      onCreate: (db, version) async {
+        _executeScript(db, 0, version);
+        await db.close();
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        _executeScript(db, oldVersion, newVersion);
+        await db.close();
+      },
+    );
   }
 
-  Future _onCreate(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE tasks(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT,
-        isComplete INTEGER NOT NULL,
-        point INTEGER NOT NULL,
-        taskType INTEGER NOT NULL,
-        atComplete TEXT
-      );
-      CREATE TABLE rewards(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT,
-        point INTEGER NOT NULL
-      );
-      CREATE TABLE points(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        point INTEGER NOT NULL
-      );
-    ''');
-    await db.insert("points", {"point": 0});
+  void _executeScript(Database db, int previousVersion, int oldVersion) async {
+    for (int i = previousVersion + 1; i <= oldVersion; i++) {
+      List<String>? queries = _scripts[i.toString()];
+      if (queries != null) {
+        for (String query in queries) {
+          await db.execute(query);
+        }
+      }
+    }
   }
-
-  Future _onUPgrade(Database db, int oldVersion, int newVersion) async {}
 }
